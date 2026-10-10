@@ -1,3 +1,4 @@
+import { env } from 'cloudflare:workers';
 export const GET = async ({ url, platform }) => {
   const token = url.searchParams.get('token');
   
@@ -8,7 +9,7 @@ export const GET = async ({ url, platform }) => {
     );
   }
 
-  const db = platform.env.DB;
+  const db = env.DB;
   
   try {
     const subscriber = await db.prepare(

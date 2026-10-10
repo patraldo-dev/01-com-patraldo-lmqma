@@ -1,4 +1,5 @@
 import { json } from '@sveltejs/kit';
+import { env } from 'cloudflare:workers';
 
 export const POST = async ({ request, platform }) => {
   const { email } = await request.json();
@@ -18,7 +19,7 @@ export const POST = async ({ request, platform }) => {
     }, { status: 400 });
   }
 
-  const db = platform.env.DB;
+  const db = env.DB;
   const token = crypto.randomUUID();
 
   try {
@@ -72,7 +73,7 @@ export const POST = async ({ request, platform }) => {
       {
         method: 'POST',
         headers: {
-          'Authorization': `Basic ${btoa('api:' + platform.env.MAILGUN_API_KEY)}`,
+          'Authorization': `Basic ${btoa('api:' + env.MAILGUN_API_KEY)}`,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: formData
